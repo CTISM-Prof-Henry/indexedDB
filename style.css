@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Zen+Old+Mincho&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+* {
+	font-family: "Roboto", serif;
+}
+
+code {
+	font-family: "Roboto Mono", monospace;
+	background: #7EA0B7;
+	color: #36494E;
+}
+
+code.codeblock {
+	display: block;
+	white-space: pre-wrap;
+}

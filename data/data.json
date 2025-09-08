@@ -1,0 +1,13 @@
+{
+	"pessoas": [{
+			"nome": "Henry",
+			"naturalidade": "Santa Maria"
+		}, {
+			"nome": "Jorge",
+			"naturalidade": "São Pedro"
+		}, {
+			"nome": "Maria",
+			"naturalidade": "Restinga Seca"
+		}
+	]
+}

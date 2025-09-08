@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Teste armazenamento Javascript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Teste de armazenamento com Javascript</h1>
+
+            Esta página descreve o funcionado do banco de dados IndexedDB para armazenamento de dados na memória do
+            navegador. Você pode conferir o código-fonte no repositório
+
+            <h2>Instruções</h2>
+
+            <ol>
+                <li>Abra a linha de comando (Iniciar > digite <code>cmd</code> > dê enter)</li>
+                <li>Navegue até a pasta com os arquivos</li>
+                <li>Digite <code>python -m http.server 8000</code> e dê Enter</li>
+                <li>Abra seu navegador e digite <code>http://localhost:8000/index.html</code></li>
+            </ol>
+
+            <form onsubmit="return false;">
+                <label for="pessoa_cpf">CPF</label>
+                <input type="text" id="pessoa_cpf">
+
+                <label for="pessoa_nome">Nome</label>
+                <input type="text" id="pessoa_nome">
+
+                <label for="pessoa_naturalidade">Naturalidade</label>
+                <input type="text" id="pessoa_naturalidade">
+
+
+                <button type="button" onclick="saveItem()">Salvar</button>
+                <button type="button" onclick="loadItem()">Recuperar</button>
+                <button type="button" onclick="removeItem()">Remover</button>
+
+                <h2>Saída do comando</h2>
+                <pre id="output"></pre>
+
+                <h2>Banco de dados</h2>
+                <pre id="db"></pre>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="script.js"></script>
+<script type="application/javascript">
+    let dh = null;
+
+    // Wait for the DOM to be fully loaded before initializing
+    document.addEventListener('DOMContentLoaded', function() {
+        dh = new DataHandler();
+    });
+
+    function saveItem() {
+        if (!dh || !dh.isReady()) {
+            document.getElementById("output").textContent = "Banco de dados não está pronto. Aguarde...";
+            return;
+        }
+
+        const cpf = document.getElementById("pessoa_cpf").value;
+        const nome = document.getElementById("pessoa_nome").value;
+        const naturalidade = document.getElementById("pessoa_naturalidade").value;
+
+        if (!cpf) {
+            document.getElementById("output").textContent = "Chave não pode estar vazia!";
+            return;
+        }
+
+        let pessoa = {"nome": nome, "cpf": cpf, "naturalidade": naturalidade};
+
+        console.log(pessoa);
+        dh.saveItem(pessoa, writeMessage);
+        dh.loadAll(showDB);
+    }
+
+    function loadItem() {
+        if (!dh || !dh.isReady()) {
+            document.getElementById("output").textContent = "Banco de dados não está pronto. Aguarde...";
+            return;
+        }
+
+        const cpf = document.getElementById("pessoa_cpf").value;
+        if (!cpf) {
+            writeMessage('O campo CPF não pode estar vazio!')
+            return;
+        }
+
+        console.log('CPF: ' + cpf);
+        dh.loadItem(cpf, writeMessage);
+        dh.loadAll(showDB);
+    }
+
+    function removeItem() {
+        if (!dh || !dh.isReady()) {
+            document.getElementById("output").textContent = "Banco de dados não está pronto. Aguarde...";
+            return;
+        }
+
+        const cpf = document.getElementById("pessoa_cpf").value;
+        if (!cpf) {
+            writeMessage('O campo CPF não pode estar vazio!')
+            return;
+        }
+
+        console.log('CPF: ' + cpf);
+        dh.removeItem(cpf, writeMessage);
+        dh.loadAll(showDB);
+    }
+
+    function writeMessage(message) {
+        document.getElementById("output").textContent = message;
+    }
+
+    function showDB(message) {
+        document.getElementById("db").textContent = message;
+    }
+
+</script>
+</html>
