@@ -9,7 +9,7 @@ Acesse o site em https://ctism-prof-henry.github.io/indexedDB
 
 ## Código-fonte
 
-O código-fonte está neste repositório do GitHub, na pasta [html](html).
+O código-fonte está neste repositório do GitHub, na pasta [docs](docs).
 
 ## Dúvidas
 
