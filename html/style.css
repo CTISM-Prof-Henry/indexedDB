@@ -14,4 +14,5 @@ code {
 code.codeblock {
 	display: block;
 	white-space: pre-wrap;
+	border: 1px solid #36494E;
 }

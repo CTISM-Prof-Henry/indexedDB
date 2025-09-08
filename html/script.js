@@ -3,7 +3,7 @@ class DataHandler {
         this.db = null;
         this.ready = false;
 
-        const request = indexedDB.open("MyDatabase", 2);
+        const request = indexedDB.open("MyDatabase", 1);
 
         request.onsuccess = (event) => {
             this.db = event.target.result;
@@ -70,7 +70,12 @@ class DataHandler {
             callback(message)
         };
         request.onerror = (event) => {
-            let message = `Erro ao salvar pessoa: ${event.target.message}`;
+            let message = null;
+            if(request.result === undefined) {
+                message = 'Não é possível salvar uma pessoa que já existe no banco de dados!';
+            } else {
+                message = `Erro ao salvar pessoa: ${event.target.message}`;
+            }
             console.log(message);
             callback(message)
         };
@@ -92,10 +97,15 @@ class DataHandler {
         }
 
         request.onsuccess = ((event) => {
-            let message = 'CPF: ' + request.result.cpf;
-            message += `\nNome: ${request.result.nome}`;
-            message += `\nNaturalidade: ${request.result.naturalidade}`;
-            console.log(`Pessoa com CPF ` + cpf + ' recuperada!');
+            let message = null;
+            if(request.result === undefined) {
+                message = 'A pessoa com o CPF especificado não existe no banco de dados!';
+            } else {
+                message = 'CPF: ' + request.result.cpf;
+                message += `\nNome: ${request.result.nome}`;
+                message += `\nNaturalidade: ${request.result.naturalidade}`;
+            }
+            console.log(message);
             callback(message)
         });
     }
